@@ -1,0 +1,137 @@
+<%- include('./partials/header') %>
+
+<div class="min-h-screen bg-gray-100 px-20 py-10">
+
+  <h1 class="text-3xl font-bold mb-10">Your Cart</h1>
+
+  <% user.cart.forEach(function(item) { 
+       if(!item.product) return;   // Safety check
+
+       let price = Number(item.product.price);
+       let discount = Number(item.product.discount);
+       let quantity = Number(item.quantity);
+
+       let itemTotal = (price - discount + 20) * quantity;
+  %>
+
+  <div class="bg-white shadow-lg rounded-2xl mb-8 flex overflow-hidden">
+
+    <!-- Product Image Section -->
+    <div class="w-[35%]">
+      <div class="flex items-center justify-center h-80 bg-[<%= item.product.bgcolor %>]">
+        <img 
+          class="h-72 object-contain"
+          src="data:image/png;base64,<%= item.product.image.toString('base64') %>" 
+          alt="">
+      </div>
+
+      <div class="flex justify-between px-5 py-4 bg-[<%= item.product.panelcolor %>]">
+        <h3 class="text-2xl font-semibold">
+          <%= item.product.name %>
+        </h3>        
+        <div class="flex items-center gap-3">
+          <form action="/cart/increase/<%= item.product._id %>" method="POST">
+   <button type="submit" class="w-8 h-8 bg-white rounded-full shadow">+</button>
+</form>
+
+          <div class="px-3 py-1 rounded-md bg-white text-black font-semibold">
+            <%= quantity %>
+          </div>
+
+<form action="/cart/decrease/<%= item.product._id %>" method="POST">
+   <button type="submit" class="w-8 h-8 bg-white rounded-full shadow">-</button>
+</form>
+
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between px-5 py-3 bg-[<%= item.product.textcolor %>] text-white">
+        <h4 class="text-lg">Net Total</h4>
+        <h2 class="text-lg font-bold">₹ <%= itemTotal %></h2>
+      </div>
+    </div>
+
+    <!-- Price Breakdown Section -->
+    <div class="w-[65%] p-8">
+
+      <h3 class="text-xl font-semibold mb-5">Price Breakdown</h3>
+
+      <div class="space-y-3 text-gray-700">
+        <div class="flex justify-between">
+          <h4>Total MRP</h4>
+          <h4>₹ <%= price %></h4>
+        </div>
+
+        <div class="flex justify-between text-red-500">
+          <h4>Discount on MRP</h4>
+          <h4>- ₹ <%= discount %></h4>
+        </div>
+
+        <div class="flex justify-between">
+          <h4>Platform Fee</h4>
+          <h4>₹ 20</h4>
+        </div>
+
+        <div class="flex justify-between text-green-600">
+          <h4>Shipping Fee</h4>
+          <h4>FREE</h4>
+        </div>
+      </div>
+
+      <div class="border-t mt-8 pt-5 flex justify-between text-xl font-semibold">
+        <h3>Total Amount</h3>
+        <h3 class="text-green-600">₹ <%= itemTotal %></h3>
+      </div>
+      <form action="/cart/remove/<%= item.product._id %>" method="POST">
+   <button class="text-red-500 font-semibold border border-red-500 rounded-md px-4 py-2 transition duration-300 hover:bg-red-500 hover:text-white my-10 ">Remove</button>
+</form>
+    </div>
+  </div>
+
+
+  <% }) %>
+    <div class="bg-white p-6 shadow-lg rounded-xl mt-10 text-right">
+   <h2 class="text-2xl font-bold">
+      Grand Total: ₹ <%= grandTotal %>
+   </h2>
+     </div>
+     
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<div class="flex ">
+<button id="rzp-button" class="bg-green-600 text-white px-6 py-3 rounded-lg mt-10">
+   Pay Now
+</button>
+  <a href="/details" class="ml-4 bg-yellow-600 text-white px-6 py-3 rounded-lg mt-10">
+   Delivery Details
+  </a>
+</div>
+
+<script>
+document.getElementById('rzp-button').onclick = async function(e) {
+
+   const response = await fetch('/create-order', { method: 'POST' });
+   const data = await response.json();
+
+   var options = {
+       "key": data.key_id,
+       "amount": data.order.amount,
+       "currency": "INR",
+       "order_id": data.order.id,
+       "handler": async function (response){
+           await fetch('/verify-payment', {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(response)
+           });
+           window.location.href = "/order-success";
+       }
+   };
+
+   var rzp = new Razorpay(options);
+   rzp.open();
+}
+</script>
+</div>
+
+<%- include('./partials/footer') %>

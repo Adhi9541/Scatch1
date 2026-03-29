@@ -1,0 +1,83 @@
+<%- include('./partials/header') %>
+
+<div class="min-h-screen bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 flex justify-center items-center p-10">
+
+  <div class="backdrop-blur-lg bg-white/20 border border-white/30 shadow-2xl rounded-3xl w-[650px] p-10 text-white">
+
+    <h2 class="text-4xl font-bold mb-8 text-center">
+      🚚 Delivery Details
+    </h2>
+
+    <form action="/details" method="POST" class="space-y-6">
+
+      <!-- Full Name -->
+      <div>
+        <label class="block mb-2 font-semibold">Full Name</label>
+        <input type="text" name="fullname" required
+          class="w-full p-3 rounded-xl text-black focus:ring-4 focus:ring-pink-400 outline-none">
+      </div>
+
+      <!-- Mobile -->
+      <div>
+        <label class="block mb-2 font-semibold">Mobile Number</label>
+        <input type="text" name="mobile" required
+          class="w-full p-3 rounded-xl text-black focus:ring-4 focus:ring-purple-400 outline-none">
+      </div>
+
+      <!-- House -->
+      <div>
+        <label class="block mb-2 font-semibold">House / Flat / Building</label>
+        <input type="text" name="house" required
+          class="w-full p-3 rounded-xl text-black focus:ring-4 focus:ring-orange-400 outline-none">
+      </div>
+
+      <!-- Street -->
+      <div>
+        <label class="block mb-2 font-semibold">Street / Area</label>
+        <input type="text" name="street" required
+          class="w-full p-3 rounded-xl text-black focus:ring-4 focus:ring-pink-400 outline-none">
+      </div>
+
+      <!-- City + State -->
+      <div class="grid grid-cols-2 gap-5">
+        <div>
+          <label class="block mb-2 font-semibold">City</label>
+          <input type="text" name="city" required
+            class="w-full p-3 rounded-xl text-black focus:ring-4 focus:ring-purple-400 outline-none">
+        </div>
+
+        <div>
+          <label class="block mb-2 font-semibold">State</label>
+          <input type="text" name="state" required
+            class="w-full p-3 rounded-xl text-black focus:ring-4 focus:ring-orange-400 outline-none">
+        </div>
+      </div>
+
+      <!-- Pincode + Country -->
+      <div class="grid grid-cols-2 gap-5">
+        <div>
+          <label class="block mb-2 font-semibold">Pincode</label>
+          <input type="text" name="pincode" required
+            class="w-full p-3 rounded-xl text-black focus:ring-4 focus:ring-pink-400 outline-none">
+        </div>
+
+        <div>
+          <label class="block mb-2 font-semibold">Country</label>
+          <input type="text" name="country" value="India" required
+            class="w-full p-3 rounded-xl text-black focus:ring-4 focus:ring-purple-400 outline-none">
+        </div>
+      </div>
+
+      <!-- Button -->
+      <button 
+        class="w-full bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 py-3 rounded-xl text-lg font-bold shadow-lg hover:scale-105 transition transform">
+        Update Delivery Details
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+<%- include('./partials/footer') %>

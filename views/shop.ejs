@@ -1,0 +1,71 @@
+<%- include('./partials/header') %>
+
+<% if(success && success.length > 0){ %>
+    <div class="absolute top-6 left-1/2 -translate-x-1/2 px-6 py-3 rounded-xl bg-blue-600 shadow-lg">
+        <span class="text-white font-medium">
+            <%= success %>
+        </span>
+    </div>
+<% } %>
+
+<div class="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 px-20 py-16 flex">
+
+    <!-- Sidebar -->
+    <div class="w-[25%] pr-10">
+        <div class="bg-white p-6 rounded-2xl shadow-lg">
+            <h3 class="text-xl font-bold mb-4 text-indigo-600">Sort By</h3>
+            <form action="/shop" method="GET">
+                <select class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-400" name="sortby" onchange="this.form.submit()">
+                    <option value="popular">Popular</option>
+                    <option value="newest">Newest</option>
+                </select>
+            </form>
+            <div class="mt-10">
+                <h4 class="font-semibold mb-3 text-purple-600">Collections</h4>
+                <a class="block mb-2 hover:text-indigo-600 transition" href="/shop?filter=newcollection">New Collection</a>
+                <a class="block mb-2 hover:text-indigo-600 transition" href="/shop?filter=all">All Products</a>
+                <a class="block mb-2 hover:text-indigo-600 transition" href="/shop?filter=discount">Discounted Products</a>
+            </div>
+            <div class="mt-10">
+                <h4 class="font-semibold mb-3 text-purple-600">Filter By</h4>
+                <a class="block mb-2 hover:text-indigo-600 transition">Availability</a>
+                <a class="block mb-2 hover:text-indigo-600 transition" >Discount</a>
+            </div>
+        </div>
+    </div>
+    <!-- Products Section -->
+    <div class="w-[75%] grid grid-cols-3 gap-8">
+
+        <% products.forEach(function(product){ %>
+
+        <div class=" rounded-3xl overflow-hidden  hover:scale-105 transition duration-300">
+
+            <div class="w-full h-56 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600">
+                <img class="h-44 object-contain drop-shadow-2xl"
+                     src="data:image/png;base64,<%= product.image.toString('base64') %>" 
+                     alt="">
+            </div>
+            <div class="px-5 py-5 bg-gradient-to-r from-purple-600 to-pink-500 text-white flex justify-between items-center">
+
+                <div>
+                    <h3 class="text-lg font-semibold"><%= product.name %></h3>
+                    <h4 class="text-sm opacity-90 font-semibold">₹ <%= product.price %></h4>
+                    <h5 class="text-lg opacity-80 font-semibold "> Discount :₹<%= product.discount %></h5>
+                </div>
+
+                <a class="w-9 h-9 flex items-center justify-center rounded-full bg-white text-black hover:scale-110 transition"
+                   href="/addtocart/<%= product._id %>">
+                    <i class="ri-add-line text-lg"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+        <% }) %>
+
+    </div>
+
+</div>
+
+<%- include('./partials/footer') %>

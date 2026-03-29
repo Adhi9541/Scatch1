@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Account</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 min-h-screen flex items-center justify-center px-4">
+
+  <!-- Top Shop Link -->
+  <div class="absolute top-6 left-6">
+    <a href="/shop" class="bg-white text-purple-600 px-4 py-2 rounded-xl font-semibold shadow hover:bg-gray-200 transition">
+      🛒 Shop
+    </a>
+  </div>
+
+  <div class="backdrop-blur-lg bg-white/20 border border-white/30 shadow-2xl rounded-3xl w-full max-w-md p-8 text-white">
+
+    <!-- Profile Image -->
+    <div class="flex justify-center mb-6">
+      <% if(user.profileImage){ %>
+        <img 
+          src="/images/<%= user.profileImage %>" 
+          class="w-32 h-32 rounded-full object-cover border-4 border-white shadow-xl hover:scale-105 transition duration-300">
+      <% } else { %>
+        <div class="w-32 h-32 rounded-full bg-white/30 flex items-center justify-center text-white text-lg">
+          No Image
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Heading -->
+    <h1 class="text-3xl font-bold text-center mb-6 tracking-wide">
+      Welcome, <span class="text-yellow-300"><%= user.fullname %></span>
+    </h1>
+
+    <!-- Details -->
+    <div class="flex flex-col gap-4 mb-6">
+      <div>
+        <label class="text-sm text-gray-200">Full Name</label>
+        <input 
+          type="text" 
+          disabled 
+          class="w-full bg-white/30 border border-white/40 rounded-xl px-4 py-2 text-white"
+          value="<%= user.fullname %>">
+      </div>
+
+      <div>
+        <label class="text-sm text-gray-200">Email</label>
+        <input 
+          type="text" 
+          disabled 
+          class="w-full bg-white/30 border border-white/40 rounded-xl px-4 py-2 text-white"
+          value="<%= user.email %>">
+      </div>
+    </div>
+
+    <!-- Upload Section -->
+    <div class="border-t border-white/30 pt-6">
+      <form 
+        method="post" 
+        action="/upload" 
+        enctype="multipart/form-data"
+        class="flex flex-col gap-4">
+
+        <input 
+          type="file" 
+          name="image"
+          accept="image/*"
+          class="file:bg-yellow-400 file:text-black file:px-4 file:py-2 file:rounded-lg file:border-0 border border-white/40 rounded-xl bg-white/20 text-white">
+
+        <input 
+          type="submit" 
+          value="Upload Image"
+          class="bg-yellow-400 hover:bg-yellow-300 text-black font-semibold py-2 rounded-xl cursor-pointer transition duration-300 hover:scale-105">
+      </form>
+    </div>
+
+  </div>
+
+</body>
+</html>

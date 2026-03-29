@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="font-sans bg-gray-50">
+    <nav class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg px-8 py-4 flex justify-between items-center">
+        <h3 class="text-2xl font-bold tracking-wide">Scatch</h3>
+        <% var loggedin = typeof loggedin != "undefined" ? loggedin : true %>
+        <% if (loggedin) { %>
+            <div class="flex items-center gap-8 text-lg font-medium">
+            <a href="/shop" class="hover:text-yellow-300 transition duration-200">Shop</a>
+            <a href="/cart" class="hover:text-yellow-300 transition duration-200 flex items-center gap-1">Cart</a>
+            <a href="/account" class="hover:text-yellow-300 transition duration-200">My Account</a>
+            <a  class="bg-red-500 hover:bg-red-600 px-4 py-1 rounded-lg text-white transition duration-200" href="/users/logout">Logout</a>
+        </div>
+        <% } %>
+        
+    </nav>
+    </nav>
